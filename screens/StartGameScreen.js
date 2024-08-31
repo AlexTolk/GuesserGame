@@ -1,23 +1,46 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import { useState } from 'react';
+import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import PrimaryButton from '../components/PrimaryButton'
 
-export default function StartGameScreen() {
+export default function StartGameScreen({onPickNumber}) {
+    const [enteredNumber, setEnteredNumber] = useState('')
+
+    function numberInputHandler(enteredText){
+        setEnteredNumber(enteredText);
+    }
+    function resetInputHandler() {
+        setEnteredNumber('');
+    }
+    function confirmInputHandler(){
+        const chosenNumber = parseInt(enteredNumber);
+        
+        if (chosenNumber <= 0 || isNaN(chosenNumber) || chosenNumber > 99) {
+            Alert.alert(
+                'Invalid Number!',
+                'Input a number from 1 to 99',
+                [{text: 'Okay', style: "destructive", onPress: resetInputHandler}]
+            );
+            return;
+        }
+        onPickNumber(chosenNumber);
+    }
     return(
         <View style={styles.inputContainer}>
             <Text>Let's play!</Text>
             <TextInput
             style={styles.input}
             maxLength={2}
-            keyboardType="number-pad"
+            inputMode="numeric"
             autoCapitalize="none"
             autoCorrect={false}
+            onChangeText={numberInputHandler}
             />
             <View style={styles.buttonsContainer}>
                 <View style={styles.buttonContainer}>
-                    <PrimaryButton>Start</PrimaryButton>
+                    <PrimaryButton pressed={confirmInputHandler}>Start</PrimaryButton>
                 </View>
                 <View style={styles.buttonContainer}>
-                    <PrimaryButton>Reset</PrimaryButton>
+                    <PrimaryButton pressed={resetInputHandler}>Reset</PrimaryButton>
                 </View>
             </View>
         </View>
@@ -33,10 +56,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#72063c',
         borderRadius: 20,
         elevation: 6,
-        shadowColor: 'black',
-        shadowOffset: {width: 6, height: 2},
-        shadowRadius: 10,
-        shadowOpacity: 0.5,
+        boxShadowColor: 'black',
+        boxShadowOffset: {width: 6, height: 2},
+        boxShadowRadius: 10,
+        boxShadowOpacity: 0.5,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
