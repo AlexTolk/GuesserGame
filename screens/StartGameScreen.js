@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
-import PrimaryButton from '../components/PrimaryButton'
+import PrimaryButton from '../components/UI/PrimaryButton'
+import Title from '../components/UI/Title'
+import Colors from "../constants/Colors"
 
 export default function StartGameScreen({onPickNumber}) {
     const [enteredNumber, setEnteredNumber] = useState('')
@@ -25,22 +27,24 @@ export default function StartGameScreen({onPickNumber}) {
         onPickNumber(chosenNumber);
     }
     return(
-        <View style={styles.inputContainer}>
-            <Text>Let's play!</Text>
-            <TextInput
-            style={styles.input}
-            maxLength={2}
-            inputMode="numeric"
-            autoCapitalize="none"
-            autoCorrect={false}
-            onChangeText={numberInputHandler}
-            />
-            <View style={styles.buttonsContainer}>
-                <View style={styles.buttonContainer}>
-                    <PrimaryButton pressed={confirmInputHandler}>Start</PrimaryButton>
-                </View>
-                <View style={styles.buttonContainer}>
-                    <PrimaryButton pressed={resetInputHandler}>Reset</PrimaryButton>
+        <View>
+            <Title>Let's play!</Title>
+            <View style={styles.inputContainer}>
+                <TextInput
+                style={styles.input}
+                maxLength={2}
+                inputMode="numeric"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={numberInputHandler}
+                />
+                <View style={styles.buttonsContainer}>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton pressed={confirmInputHandler}>Start</PrimaryButton>
+                    </View>
+                    <View style={styles.buttonContainer}>
+                        <PrimaryButton pressed={resetInputHandler}>Reset</PrimaryButton>
+                    </View>
                 </View>
             </View>
         </View>
@@ -53,7 +57,7 @@ const styles = StyleSheet.create({
         marginTop: 150,
         marginHorizontal: 24,
         padding: 30,
-        backgroundColor: '#72063c',
+        backgroundColor: Colors.primary500,
         borderRadius: 20,
         elevation: 6,
         boxShadowColor: 'black',
@@ -75,10 +79,10 @@ const styles = StyleSheet.create({
         height: 50,
         width: 100,
         fontSize: 32,
-        borderBottomColor: '#ddb52f',
+        borderBottomColor: Colors.secondary,
         borderBottomWidth: 2,
-        backgroundColor: '#72063',
-        color: '#ddb52f',
+        backgroundColor: Colors.primary500,
+        color: Colors.secondary,
         marginVertical: 10,
         fontWeight: '500',
         textAlign: 'center',
