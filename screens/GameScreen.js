@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Alert } from "react-native";
-import Title from "../components/UI/Title"
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+
+import Title from "../components/UI/Title";
 import NumberContainer from "../components/game/NumberContainer";
 import PrimaryButton from "../components/UI/PrimaryButton";
+
 
 function generateRandomNumber(min, max, exclude) {
     const rndNum = Math.floor(Math.random() * (max - min)) + min;
@@ -17,9 +20,15 @@ let lowerBoundary = 1;
 let upperBoundary = 100;
 
 
-export default function GameScreen({userNumber}) {
-    const initialGuess = generateRandomNumber(lowerBoundary, upperBoundary, userNumber)
+export default function GameScreen({ userNumber, onGameOver }) {
+    const initialGuess = generateRandomNumber(1, 100, userNumber);
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
+
+    useEffect(() =>{
+        if(currentGuess === userNumber) {
+            onGameOver();
+        }
+    }, [currentGuess, userNumber, onGameOver]);
 
     function nextGuessHandler(direction) {
         if ((direction === '-' && currentGuess < userNumber) || (direction === '+' && currentGuess > userNumber)) {
@@ -42,8 +51,8 @@ export default function GameScreen({userNumber}) {
             <NumberContainer>{currentGuess}</NumberContainer>
             <View>
                 <Text>Higher or lower?</Text>
-                <PrimaryButton pressed={nextGuessHandler.bind(this, '+')}>+</PrimaryButton>
-                <PrimaryButton pressed={nextGuessHandler.bind(this, '-')}>-</PrimaryButton> 
+                <PrimaryButton pressed={nextGuessHandler.bind(this, '+')}><FontAwesome name="plus" size={24} color={'#fff'} /></PrimaryButton>
+                <PrimaryButton pressed={nextGuessHandler.bind(this, '-')}><FontAwesome name="minus" size={24} color={'#fff'} /></PrimaryButton> 
             </View>
             <View></View>
         </View>

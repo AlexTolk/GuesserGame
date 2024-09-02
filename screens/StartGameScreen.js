@@ -27,9 +27,10 @@ export default function StartGameScreen({onPickNumber}) {
         onPickNumber(chosenNumber);
     }
     return(
-        <View>
+        <View style={styles.rootContainer}>
             <Title>Let's play!</Title>
             <View style={styles.inputContainer}>
+                <Text style={styles.instruction}>Pick a number from 1 to 100, I won't peek, I promise!</Text>
                 <TextInput
                 style={styles.input}
                 maxLength={2}
@@ -52,9 +53,14 @@ export default function StartGameScreen({onPickNumber}) {
 }
 
 const styles = StyleSheet.create({
+    rootContainer: {
+        flex: 1,
+        marginTop: 100,
+        alignItems: 'center',
+    },
     inputContainer: {
         maxHeight: 250,
-        marginTop: 150,
+        marginTop: 50,
         marginHorizontal: 24,
         padding: 30,
         backgroundColor: Colors.primary500,
@@ -86,5 +92,11 @@ const styles = StyleSheet.create({
         marginVertical: 10,
         fontWeight: '500',
         textAlign: 'center',
+    },
+    instruction: {
+        color: 'white',
+        textAlign: 'center',
+        fontSize: 16,
+        fontFamily: 'open-sans'
     }
 })
