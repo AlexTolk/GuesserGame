@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
         paddingVertical: 10,
         paddingHorizontal: 16,
         margin: 4,
+        minWidth: 100,
     },
     buttonLabel: {
         textAlign: 'center',

@@ -27,8 +27,9 @@ export default function App() {
     setGameOver(false);
   }
 
-  function gameOverHandler() {
+  function gameOverHandler(numOfRounds) {
     setGameOver(true);
+    setGuessRoundsNumber(numOfRounds);
   }
 
   function startNewGameHandler() {
@@ -64,8 +65,10 @@ export default function App() {
 const styles = StyleSheet.create({
   mainWrapper: {
     flex: 1,
+    overflow: 'hidden',
   },
   backgroundImage: {
     opacity: 0.4,
+    
   }
 });

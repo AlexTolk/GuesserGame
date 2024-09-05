@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
+import { View, Text, TextInput, StyleSheet, Alert, Dimensions, KeyboardAvoidingView, ScrollView } from "react-native";
 import PrimaryButton from '../components/UI/PrimaryButton'
 import Title from '../components/UI/Title'
 import Colors from "../constants/Colors"
@@ -20,42 +20,52 @@ export default function StartGameScreen({onPickNumber}) {
             Alert.alert(
                 'Invalid Number!',
                 'Input a number from 1 to 99',
-                [{text: 'Okay', style: "destructive", onPress: resetInputHandler}]
+                [{text: 'Okay', style: 'default', onPress: resetInputHandler}]
             );
             return;
         }
         onPickNumber(chosenNumber);
     }
     return(
-        <View style={styles.rootContainer}>
-            <Title>Let's play!</Title>
-            <View style={styles.inputContainer}>
-                <Text style={styles.instruction}>Pick a number from 1 to 100, I won't peek, I promise!</Text>
-                <TextInput
-                style={styles.input}
-                maxLength={2}
-                inputMode="numeric"
-                autoCapitalize="none"
-                autoCorrect={false}
-                onChangeText={numberInputHandler}
-                />
-                <View style={styles.buttonsContainer}>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton pressed={confirmInputHandler}>Start</PrimaryButton>
-                    </View>
-                    <View style={styles.buttonContainer}>
-                        <PrimaryButton pressed={resetInputHandler}>Reset</PrimaryButton>
+        <ScrollView style={styles.screen}>
+            <KeyboardAvoidingView style={styles.screen} behavior='position'>
+                <View style={styles.rootContainer}>
+                    <Title>Let's play!</Title>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.instruction}>Pick a number from 1 to 99, I won't peek, I promise!</Text>
+                        <TextInput
+                        style={styles.input}
+                        maxLength={2}
+                        inputMode="numeric"
+                        autoCapitalize="none"
+                        autoCorrect={false}
+                        onChangeText={numberInputHandler}
+                        value={enteredNumber}
+                        />
+                        <View style={styles.buttonsContainer}>
+                            <View style={styles.buttonContainer}>
+                                <PrimaryButton pressed={confirmInputHandler}>Start</PrimaryButton>
+                            </View>
+                            <View style={styles.buttonContainer}>
+                                <PrimaryButton style={styles.button} pressed={resetInputHandler}>Reset</PrimaryButton>
+                            </View>
+                        </View>
                     </View>
                 </View>
-            </View>
-        </View>
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 }
 
+const deviceHeight = Dimensions.get('window').height
+
 const styles = StyleSheet.create({
+    screen: {
+        flex: 1,
+    },
     rootContainer: {
         flex: 1,
-        marginTop: 100,
+        marginTop: deviceHeight < 500 ? 20 : 100,
         alignItems: 'center',
     },
     inputContainer: {
